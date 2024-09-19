@@ -1,14 +1,14 @@
-require('dotnev').config
+require('dotenv').config();
 
 const express = require('express')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
-const mongoose = require('mongoose ')
+const mongoose = require('mongoose')
 const path = require('path')
 const corsOptions = require('./config/cors')
 const connectDB = require('./config/database')
 const credentials = require('./middleware/credentials')
-const authenticationMiddleware = require('./middleware/authentication')
+const errorHandlerMiddleware = require('./middleware/error_handler')
 
 const app = express()
 const PORT = 3500
@@ -41,4 +41,7 @@ app.all('*', (req, res) => {
     }
   }) 
 
-app.listen(PORT, ()=> {console.log(`Listening on port ${PORT}`)})
+  mongoose.connection.once('open', ()=>{
+    console.log('DB connected')
+    app.listen(PORT, () => { console.log(`Listening on port ${PORT}`) })
+  })
