@@ -1,5 +1,5 @@
 require('dotenv').config();
-
+const dbUri = process.env.DATABASE_URI;
 const express = require('express')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
